@@ -1,0 +1,46 @@
+{% extends "koota/base.html" %}
+
+{% block body %}
+
+<h1>Oxford 2016 study</h1>
+
+{% if not is_in_oxford_study %}
+<b>You are not currently enrolled in the Oxford study, so many things may
+be missing here.</b>
+{% endif %}
+
+
+Welcome to the page of the Oxford 2016 study.  Your username is
+{{request.user.username}}.
+
+To get started, follow the steps below:
+
+
+{% for action in actions%}
+<div style="border:1px solid black; width: 50% ; padding: 2em; margin: 1em;">
+{% if not action.exists %}
+  Device for {{action}} device does not exist!
+
+{% else %}
+  {{ action.render }}
+{% endif %}
+
+</div>
+{% endfor %}
+
+<h2>More information</h2>
+
+Put more information about the study here, including links.
+
+<h2>Your data</h2>
+
+You can see all raw data collected at <a href="{% url 'device-list' %}">your device list</a>.
+
+<br>
+<br>
+<br>
+<br>
+
+
+
+{% endblock %}
