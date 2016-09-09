@@ -149,37 +149,53 @@ Your phone has been linked, thank you!
 
 {% else %}
 
-Please link either your Android or iOS device.  Once it is linked and
-some data has arrived, when you refresh the page it will tell you.
+
+<p>Please link either your Android or iOS device.  Once it is linked and
+some data has arrived, when you refresh the page it will tell you.</p>
 
 
-<table>
-<tr valign="top">
-<td style="padding: 1em;">
-<h4>Android</h4>
-
-<p>Search for "Aware Framework" in the Google Play store and install this app.  Open
-it, and scan this QR code:</p>
+<div class="container-fluid">
+<div class=row>
 
 
-</td>
-<td style="padding: 1em;">
-<h4>iOS</h4>
+<div class="col-md-6">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4>Android</h4>
+    </div>
+    <div class="panel-body">
 
-<p>Search for "Aware Client" in the App store and install this app.  Scan
-this QR code:</p>
-</tr>
+      <p>Search for "Aware Framework" in the Google Play store and
+      install this app.  Open it, and scan this QR code:</p>
+
+      <img src="{% url 'aware-register-qr' public_id=android.public_id %}" style="width: 10em;">
+
+      <p>Manual config URL: {{ android.get_class.qrcode_url }}</p>
+    </div>
+  </div>
+</div>
 
 
-<tr>
-<td>
-<img src="{% url 'aware-register-qr' public_id=android.public_id %}" style="width: 10em;">
-</td>
-<td>
-<img src="{% url 'aware-register-qr' public_id=ios.public_id %}" style="width: 10em;">
-</td>
-</tr>
-</table>
+<div class="col-md-6">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4>iOS</h4>
+    </div>
+    <div class="panel-body">
+
+      <p>Search for "Aware Client" in the App store and install this app.  Scan
+      this QR code:</p>
+
+      <img src="{% url 'aware-register-qr' public_id=ios.public_id %}" style="width: 10em;">
+
+      <p>Manual config URL: {{ ios.get_class.qrcode_url }}</p>
+    </div>
+  </div>
+</div>
+
+
+</div>
+</div>
 
 {% endif %}
 """
