@@ -50,10 +50,9 @@ class BaseAction(object):
 class LinkFacebook(BaseAction):
     devtype = Facebook.pyclass_name()
     name = 'Facebook'
+    heading = 'Facebook'
     uname = 'Facebook'
     template = """\
-<h2>Facebook</h2>
-
 {% if dev.status == 'linked'%}
 Your account is linked, thank you!
 
@@ -69,7 +68,7 @@ an account, that's OK, just let us know so we don't bug you anymore.
 
 <p>
   <form method="post" style="display: inline" action="{% url 'facebook-link' public_id=dev.public_id%}">{%csrf_token%}
-    <button type="submit" class="btn btn-xs btn-success">Link Facebook</button>
+    <button type="submit" class="btn btn-xs btn-primary">Link Facebook</button>
   </form>
   <form method="post" style="display: inline" action="{% url 'mark-dont-have-device' public_id=dev.public_id %}">{%csrf_token%}
     <button type="submit" class="btn btn-xs">I don't have a Facebook account</button>
@@ -81,10 +80,9 @@ an account, that's OK, just let us know so we don't bug you anymore.
 """
 
 class LinkTwitter(LinkFacebook):
+    heading = "Twitter"
     devtype = Twitter.pyclass_name()
     template = """\
-<h2>Twitter</h2>
-
 {% if dev.status == 'linked'%}
 Your account is linked, thank you!
 
@@ -101,7 +99,7 @@ an account, that's OK, just let us know so we don't bug you anymore.
 
 <p>
   <form method="post" style="display: inline" action="{% url 'twitter-link' public_id=dev.public_id%}">{%csrf_token%}
-    <button type="submit" class="btn btn-xs btn-success">Link Twitter</button>
+    <button type="submit" class="btn btn-xs btn-primary">Link Twitter</button>
   </form>
   <form method="post" style="display: inline" action="{% url 'mark-dont-have-device' public_id=dev.public_id %}">{%csrf_token%}
     <button type="submit" class="btn btn-xs">I don't have a Twitter account</button>
@@ -112,10 +110,9 @@ an account, that's OK, just let us know so we don't bug you anymore.
 """
 
 class LinkInstagram(LinkFacebook):
+    heading = "Instagram"
     devtype = Instagram.pyclass_name()
     template = """\
-<h2>Instagram</h2>
-
 {% if dev.status == 'linked'%}
 Your account is linked, thank you!
 
@@ -131,7 +128,7 @@ an account, that's OK, just let us know so we don't bug you anymore.
 
 <p>
   <form method="post" style="display: inline" action="{% url 'instagram-link' public_id=dev.public_id%}">{%csrf_token%}
-    <button type="submit" class="btn btn-xs btn-success">Link Instagram</button>
+    <button type="submit" class="btn btn-xs btn-primary">Link Instagram</button>
   </form>
   <form method="post" style="display: inline" action="{% url 'mark-dont-have-device' public_id=dev.public_id %}">{%csrf_token%}
     <button type="submit" class="btn btn-xs">I don't have an Instagram account</button>
@@ -144,9 +141,8 @@ an account, that's OK, just let us know so we don't bug you anymore.
 
 
 class LinkAware(BaseAction):
+    heading = "Your phone"
     template = """\
-<h2>Your phone</h2>
-
 {% if android.has_data or ios.has_data%}
 
 Your phone has been linked, thank you!
@@ -159,7 +155,7 @@ some data has arrived, when you refresh the page it will tell you.
 
 <table>
 <tr valign="top">
-<td>
+<td style="padding: 1em;">
 <h4>Android</h4>
 
 <p>Search for "Aware Framework" in the Google Play store and install this app.  Open
@@ -167,7 +163,7 @@ it, and scan this QR code:</p>
 
 
 </td>
-<td>
+<td style="padding: 1em;">
 <h4>iOS</h4>
 
 <p>Search for "Aware Client" in the App store and install this app.  Scan
@@ -209,10 +205,10 @@ this QR code:</p>
         text = template.render(context=locals(), request=self.request)
         return text
 
-actions = [LinkAware,
-           LinkFacebook,
+actions = [LinkFacebook,
            LinkTwitter,
            LinkInstagram,
+           LinkAware,
        ]
 
 
