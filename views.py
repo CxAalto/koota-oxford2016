@@ -70,8 +70,12 @@ an account, that's OK, just let us know so we don't bug you anymore.
   <form method="post" style="display: inline" action="{% url 'facebook-link' public_id=dev.public_id%}">{%csrf_token%}
     <button type="submit" class="btn btn-xs btn-primary">Link Facebook</button>
   </form>
-  <form method="post" style="display: inline" action="{% url 'mark-dont-have-device' public_id=dev.public_id %}">{%csrf_token%}
+  <form method="post" style="display: inline" action="{% url 'mark-device-dont-have' public_id=dev.public_id %}">{%csrf_token%}
     <button type="submit" class="btn btn-xs">I don't have a Facebook account</button>
+  </form>
+  <form method="post" style="display: inline" action="{% url 'mark-device-not-linking' public_id=dev.public_id %}">{%csrf_token%}
+    <input type="hidden" name="next" value="{{request.path}}">
+    <button type="submit" class="btn btn-xs">I'd rather not link now</button>
   </form>
 </p>
 
@@ -101,8 +105,11 @@ an account, that's OK, just let us know so we don't bug you anymore.
   <form method="post" style="display: inline" action="{% url 'twitter-link' public_id=dev.public_id%}">{%csrf_token%}
     <button type="submit" class="btn btn-xs btn-primary">Link Twitter</button>
   </form>
-  <form method="post" style="display: inline" action="{% url 'mark-dont-have-device' public_id=dev.public_id %}">{%csrf_token%}
+  <form method="post" style="display: inline" action="{% url 'mark-device-dont-have' public_id=dev.public_id %}">{%csrf_token%}
     <button type="submit" class="btn btn-xs">I don't have a Twitter account</button>
+  </form>
+  <form method="post" style="display: inline" action="{% url 'mark-device-not-linking' public_id=dev.public_id %}">{%csrf_token%}
+    <button type="submit" class="btn btn-xs">I'd rather not link now</button>
   </form>
 </p>
 
@@ -130,8 +137,11 @@ an account, that's OK, just let us know so we don't bug you anymore.
   <form method="post" style="display: inline" action="{% url 'instagram-link' public_id=dev.public_id%}">{%csrf_token%}
     <button type="submit" class="btn btn-xs btn-primary">Link Instagram</button>
   </form>
-  <form method="post" style="display: inline" action="{% url 'mark-dont-have-device' public_id=dev.public_id %}">{%csrf_token%}
+  <form method="post" style="display: inline" action="{% url 'mark-device-dont-have' public_id=dev.public_id %}">{%csrf_token%}
     <button type="submit" class="btn btn-xs">I don't have an Instagram account</button>
+  </form>
+  <form method="post" style="display: inline" action="{% url 'mark-device-not-linking' public_id=dev.public_id %}">{%csrf_token%}
+    <button type="submit" class="btn btn-xs">I'd rather not link now</button>
   </form>
 </p>
 
