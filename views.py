@@ -12,10 +12,10 @@ from django.utils.safestring import mark_safe
 
 from kdata import devices
 from kdata import models
-from kdata.facebook import Facebook
-from kdata.twitter import Twitter
-from kdata.instagram import Instagram
-from kdata.aware import AwareDevice, AwareDeviceValidCert
+from kdata.devices.facebook import Facebook
+from kdata.devices.twitter import Twitter
+from kdata.devices.instagram import Instagram
+from kdata.devices.aware import Aware, AwareValidCert
 
 
 class BaseAction(object):
