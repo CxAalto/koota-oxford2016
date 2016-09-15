@@ -49,17 +49,25 @@ class BaseAction(object):
 
 class LinkFacebook(BaseAction):
     devtype = Facebook.pyclass_name()
-    name = 'Facebook'
     heading = 'Facebook'
-    uname = 'Facebook'
     template = """\
-{% if dev.status == 'linked'%}
-Your account is linked, thank you!
+{% if dev.oauthdevice.state == 'linked'%}
+Your account is linked, thank you!  If you want, you can always
+  <form method="post" style="display: inline" action="{% url 'facebook-unlink' public_id=dev.public_id%}">{%csrf_token%}
+    <button type="submit" class="btn btn-xs">unlink your account</button>
+  </form>
 
-{% elif dev.status == 'donthave' %}
+
+
+{% elif dev.attrs.dont_have or dev.attrs.not_linking %}
 
 So you don't have a account, that's OK.  If you do get an
-account, you can <a href="{% url 'facebook-link' public_id=dev.public_id%}">link it here</a>.
+account, you can
+  <form method="post" style="display: inline" action="{% url 'facebook-link' public_id=dev.public_id%}">{%csrf_token%}
+    <button type="submit" class="btn btn-xs btn-primary">Link Facebook</button>
+  </form>
+
+
 
 {% else%}
 
@@ -70,10 +78,10 @@ an account, that's OK, just let us know so we don't bug you anymore.
   <form method="post" style="display: inline" action="{% url 'facebook-link' public_id=dev.public_id%}">{%csrf_token%}
     <button type="submit" class="btn btn-xs btn-primary">Link Facebook</button>
   </form>
-  <form method="post" style="display: inline" action="{% url 'mark-device-dont-have' public_id=dev.public_id %}">{%csrf_token%}
+  <form method="post" style="display: inline" action="{% url 'mark-device-dont-have' public_id=dev.public_id %}">{%csrf_token%} <input type="hidden" name="next" value="{{request.path}}">
     <button type="submit" class="btn btn-xs">I don't have a Facebook account</button>
   </form>
-  <form method="post" style="display: inline" action="{% url 'mark-device-not-linking' public_id=dev.public_id %}">{%csrf_token%}
+  <form method="post" style="display: inline" action="{% url 'mark-device-not-linking' public_id=dev.public_id %}">{%csrf_token%} <input type="hidden" name="next" value="{{request.path}}">
     <input type="hidden" name="next" value="{{request.path}}">
     <button type="submit" class="btn btn-xs">I'd rather not link now</button>
   </form>
@@ -87,28 +95,37 @@ class LinkTwitter(LinkFacebook):
     heading = "Twitter"
     devtype = Twitter.pyclass_name()
     template = """\
-{% if dev.status == 'linked'%}
+{% if dev.oauthdevice.state == 'linked'%}
 Your account is linked, thank you!
+  <form method="post" style="display: inline" action="{% url 'twitter-unlink' public_id=dev.public_id%}">{%csrf_token%}
+    <button type="submit" class="btn btn-xs">unlink your account</button>
+  </form>
 
-{% elif dev.status == 'donthave' %}
+
+
+{% elif dev.attrs.dont_have or dev.attrs.not_linking %}
 
 So you don't have an account, that's OK.  If you do get an
-account, you can <a href="{% url 'facebook-link' public_id=dev.public_id%}">link it here</a>.
+account, you can
+  <form method="post" style="display: inline" action="{% url 'twitter-link' public_id=dev.public_id%}">{%csrf_token%}
+    <button type="submit" class="btn btn-xs btn-primary">Link Twitter</button>
+  </form>
+
+
 
 {% else%}
 
 Please link your account, if you have one.  If you don't have
 an account, that's OK, just let us know so we don't bug you anymore.
 
-
 <p>
   <form method="post" style="display: inline" action="{% url 'twitter-link' public_id=dev.public_id%}">{%csrf_token%}
     <button type="submit" class="btn btn-xs btn-primary">Link Twitter</button>
   </form>
-  <form method="post" style="display: inline" action="{% url 'mark-device-dont-have' public_id=dev.public_id %}">{%csrf_token%}
+  <form method="post" style="display: inline" action="{% url 'mark-device-dont-have' public_id=dev.public_id %}">{%csrf_token%} <input type="hidden" name="next" value="{{request.path}}">
     <button type="submit" class="btn btn-xs">I don't have a Twitter account</button>
   </form>
-  <form method="post" style="display: inline" action="{% url 'mark-device-not-linking' public_id=dev.public_id %}">{%csrf_token%}
+  <form method="post" style="display: inline" action="{% url 'mark-device-not-linking' public_id=dev.public_id %}">{%csrf_token%} <input type="hidden" name="next" value="{{request.path}}">
     <button type="submit" class="btn btn-xs">I'd rather not link now</button>
   </form>
 </p>
@@ -120,15 +137,25 @@ class LinkInstagram(LinkFacebook):
     heading = "Instagram"
     devtype = Instagram.pyclass_name()
     template = """\
-{% if dev.status == 'linked'%}
+{% if dev.oauthdevice.state == 'linked'%}
 Your account is linked, thank you!
+  <form method="post" style="display: inline" action="{% url 'instagram-unlink' public_id=dev.public_id%}">{%csrf_token%}
+    <button type="submit" class="btn btn-xs">unlink your account</button>
+  </form>
 
-{% elif dev.status == 'donthave' %}
 
-So you don't have a twitter account, that's OK.  If you do get an
-account, you can <a href="{% url 'facebook-link' public_id=dev.public_id%}">link it here</a>.
 
-{% else%}
+{% elif dev.oauthdevice.state == 'donthave' %}
+
+So you don't have an Instagram account, that's OK.  If you do get an
+account, you can
+  <form method="post" style="display: inline" action="{% url 'instagram-link' public_id=dev.public_id%}">{%csrf_token%}
+    <button type="submit" class="btn btn-xs btn-primary">Link Instagram</button>
+  </form>
+
+
+
+{% else %}
 
 Please link your account, if you have one.  If you don't have
 an account, that's OK, just let us know so we don't bug you anymore.
@@ -137,10 +164,10 @@ an account, that's OK, just let us know so we don't bug you anymore.
   <form method="post" style="display: inline" action="{% url 'instagram-link' public_id=dev.public_id%}">{%csrf_token%}
     <button type="submit" class="btn btn-xs btn-primary">Link Instagram</button>
   </form>
-  <form method="post" style="display: inline" action="{% url 'mark-device-dont-have' public_id=dev.public_id %}">{%csrf_token%}
+  <form method="post" style="display: inline" action="{% url 'mark-device-dont-have' public_id=dev.public_id %}">{%csrf_token%} <input type="hidden" name="next" value="{{request.path}}">
     <button type="submit" class="btn btn-xs">I don't have an Instagram account</button>
   </form>
-  <form method="post" style="display: inline" action="{% url 'mark-device-not-linking' public_id=dev.public_id %}">{%csrf_token%}
+  <form method="post" style="display: inline" action="{% url 'mark-device-not-linking' public_id=dev.public_id %}">{%csrf_token%} <input type="hidden" name="next" value="{{request.path}}">
     <button type="submit" class="btn btn-xs">I'd rather not link now</button>
   </form>
 </p>
@@ -213,11 +240,11 @@ some data has arrived, when you refresh the page it will tell you.</p>
         return True
     def render(self):
         android = models.Device.objects.filter(user=self.user,
-                                               type=AwareDevice.pyclass_name(),
+                                               type=Aware.pyclass_name(),
                                                label__slug='primary').get()
 
         ios = models.Device.objects.filter(user=self.user,
-                                           type=AwareDeviceValidCert.pyclass_name(),
+                                           type=AwareValidCert.pyclass_name(),
                                            label__slug='primary').get()
 
         template = self.template
@@ -271,8 +298,8 @@ class Oxford2016(BaseGroup):
           if 'create_devices' in data:
 
             devs = [
-                dict(cls=kdata.aware.AwareDevice, name="Phone"),
-                dict(cls=kdata.aware.AwareDeviceValidCert, name="Phone"),
+                dict(cls=Aware, name="Phone"),
+                dict(cls=AwareValidCert, name="Phone"),
                 dict(cls=Facebook, name="Facebook"),
                 dict(cls=Twitter, name="Twitter"),
                 dict(cls=Instagram, name="Instagram"),
