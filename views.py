@@ -207,7 +207,7 @@ some data has arrived, when you refresh the page it will tell you.</p>
 
       <img src="{% url 'aware-register-qr' public_id=android.public_id %}" style="width: 10em;">
 
-      <p>Manual config URL: {{ android.get_class.qrcode_url }}</p>
+      <p>If you are using your phone to sign up, or for some other reason can't scan the QR code, click the following link to link your phone: {{ android.get_class.qrcode_url }}</p>
     </div>
   </div>
 </div>
@@ -222,10 +222,11 @@ some data has arrived, when you refresh the page it will tell you.</p>
 
       <p>Search for "Aware Client" in the App store and install this app.  Scan
       this QR code:</p>
+      #it would be good to have a link here that would redirect them to the Aware Client download page on the play and apple stores - CR
 
       <img src="{% url 'aware-register-qr' public_id=ios.public_id %}" style="width: 10em;">
 
-      <p>Manual config URL: {{ ios.get_class.qrcode_url }}</p>
+      <p>If you are using your phone to sign up, or for some other reason can't scan the QR code, click the following link to link your phone: {{ ios.get_class.qrcode_url }}</p>
     </div>
   </div>
 </div>
@@ -260,7 +261,7 @@ some data has arrived, when you refresh the page it will tell you.</p>
 
 actions = [LinkFacebook,
            LinkTwitter,
-           LinkInstagram,
+#           LinkInstagram,
            LinkAware,
        ]
 
