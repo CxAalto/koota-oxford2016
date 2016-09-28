@@ -202,8 +202,7 @@ some data has arrived, when you refresh the page it will tell you.</p>
     </div>
     <div class="panel-body">
 
-      <p>Search for "Aware Framework" in the Google Play store and
-      install this app.  Open it, and scan this QR code:</p>
+      <p>Install <a href="http://play.google.com/store/apps/details?id=com.aware.phone">"Aware Framework"</a> from the Google Play store, then scan this QR code with the app:</p>
 
       <img src="{% url 'aware-register-qr' public_id=android.public_id %}" style="width: 10em;">
 
@@ -220,9 +219,8 @@ some data has arrived, when you refresh the page it will tell you.</p>
     </div>
     <div class="panel-body">
 
-      <p>Search for "Aware Client" in the App store and install this app.  Scan
+      <p>Install <a href="https://itunes.apple.com/us/app/aware-client-ios/id1065978412">"Aware Client"</a>, then scan
       this QR code:</p>
-      #it would be good to have a link here that would redirect them to the Aware Client download page on the play and apple stores - CR
 
       <img src="{% url 'aware-register-qr' public_id=ios.public_id %}" style="width: 10em;">
 
